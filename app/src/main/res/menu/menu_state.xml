@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="utt.isi.if26.project.android.messenger.Activity.implementation.StateActivity">
+    <item android:id="@+id/action_settings"
+          android:title="@string/menu_remove_all"
+          android:orderInCategory="100"
+          android:showAsAction="never"/>
+</menu>

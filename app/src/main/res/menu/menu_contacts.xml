@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="utt.isi.if26.project.android.messenger.Activity.implementation.ContactsActivity">
+
+    <item android:id="@+id/menu_group_discussion"
+          android:icon="@drawable/ic_group_discussion"
+          android:showAsAction="ifRoom"
+          android:title="@string/menu_group_discussion"/>
+    <item android:id="@+id/menu_add_contact"
+          android:icon="@drawable/ic_add_contact"
+          android:showAsAction="ifRoom"
+          android:title="@string/menu_add_contact"/>
+    <item android:id="@+id/menu_remove_contact"
+          android:title="@string/menu_remove_contact"
+          android:orderInCategory="100"
+          android:showAsAction="never"/>
+    <item android:id="@+id/menu_settings"
+          android:title="@string/menu_settings"
+          android:orderInCategory="100"
+          android:showAsAction="never"/>
+</menu>
