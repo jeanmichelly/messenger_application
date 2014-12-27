@@ -6,5 +6,6 @@ package utt.isi.if26.project.android.messenger.Activity;
 public interface ConnectionControllerListener {
 
     public void onLoginSuccess();
+    public void onLoginFailed();
 
 }

@@ -1,15 +1,20 @@
 package utt.isi.if26.project.android.messenger.Activity.implementation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import android.widget.EditText;
+import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.ConnectionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.ConnectionController;
+import utt.isi.if26.project.android.messenger.parser.ConnectionJSONParser;
 
 
 public class ConnectionActivity extends Activity implements ConnectionControllerListener {
@@ -20,9 +25,37 @@ public class ConnectionActivity extends Activity implements ConnectionController
         setContentView(R.layout.activity_connection);
 
         ConnectionController connectionController = new ConnectionController(
+                (EditText) findViewById(R.id.login_eT),
+                (EditText) findViewById(R.id.password_eT),
                 (Button) findViewById(R.id.sign_in_b),
                 this);
         connectionController.setListeners();
+    }
+
+    @Override
+    public void onLoginSuccess() {
+
+        Intent intent = new Intent(this, DiscussionsActivity.class);
+        try {
+            intent.putExtra("token", ConnectionJSONParser.getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLoginFailed() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Echec de connexion");
+        alertDialog.setMessage("Votre email ou mot de passe est incorrect");
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // here you can add functions
+            }
+        });
+        alertDialog.show();
     }
 
 
@@ -50,9 +83,4 @@ public class ConnectionActivity extends Activity implements ConnectionController
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onLoginSuccess() {
-        Intent intent = new Intent(this, DiscussionsActivity.class);
-        startActivity(intent);
-    }
 }
