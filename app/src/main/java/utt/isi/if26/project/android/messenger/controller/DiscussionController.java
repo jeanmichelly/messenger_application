@@ -1,8 +1,13 @@
 package utt.isi.if26.project.android.messenger.controller;
 
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
+import utt.isi.if26.project.android.messenger.model.Contact;
 import utt.isi.if26.project.android.messenger.model.Message;
 import utt.isi.if26.project.android.messenger.model.User;
 import utt.isi.if26.project.android.messenger.network.Util;
@@ -15,20 +20,21 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by jean-michelly on 28/12/2014.
  */
-public class DiscussionController {
+public class DiscussionController implements OnClickListener {
+
 
     private DiscussionView discussionView;
     private DiscussionControllerListener listener;
 
-    public DiscussionController (ListView discussionLv, DiscussionControllerListener listener) {
-        this.discussionView = new DiscussionView(discussionLv);
+    public DiscussionController (ListView discussionLv, EditText messageEt, Button sendMessageB, DiscussionControllerListener listener) {
+        this.discussionView = new DiscussionView(discussionLv, messageEt, sendMessageB);
         this.listener = listener;
     }
 
-    public void initDiscussionContactRequestOnWebServices(String token, String contact) throws JSONException, InterruptedException, ExecutionException {
+    public void initDiscussionContactRequestOnWebServices() throws JSONException, InterruptedException, ExecutionException {
         WebServices request = new WebServices();
-        WebServices.addParameter("token", token);
-        WebServices.addParameter("contact", contact);
+        WebServices.addParameter("token", User.getUser().getToken());
+        WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
         request.execute(Util.DISCUSSION_URL);
         User.getUser().initConversation();
         try {
@@ -60,4 +66,18 @@ public class DiscussionController {
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        listener.sendMessage();
+
+        WebServices request = new WebServices();
+        WebServices.addParameter("token", User.getUser().getToken());
+        WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
+        WebServices.addParameter("message", "toto");
+        request.execute(Util.MESSAGE_URL);
+    }
+
+    public void setListeners () {
+        discussionView.setListeners(this);
+    }
 }

@@ -12,5 +12,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/discussion_lV" android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true" android:layout_above="@+id/send_message_eT"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_message_eT"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Envoyer"
+            android:id="@+id/send_message_b" android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/discussion_lV" android:layout_alignEnd="@+id/discussion_lV"/>
 </RelativeLayout>

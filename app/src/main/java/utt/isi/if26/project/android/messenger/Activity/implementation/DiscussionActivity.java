@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
@@ -28,10 +30,12 @@ public class DiscussionActivity extends Activity implements DiscussionController
 
         DiscussionController discussionController = new DiscussionController(
                 (ListView) findViewById(R.id.discussion_lV),
+                (EditText) findViewById(R.id.send_message_eT),
+                (Button) findViewById(R.id.send_message_b),
                 this);
-
+        discussionController.setListeners();
         try {
-            discussionController.initDiscussionContactRequestOnWebServices(getIntent().getStringExtra("token"), getIntent().getStringExtra("contact"));
+            discussionController.initDiscussionContactRequestOnWebServices();
         }
 
         catch (InterruptedException e) {
@@ -57,6 +61,11 @@ public class DiscussionActivity extends Activity implements DiscussionController
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, messagesView);
         listMessages.setAdapter(adapter);
+    }
+
+    @Override
+    public void sendMessage() {
+
     }
 
     @Override

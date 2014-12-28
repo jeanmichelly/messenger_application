@@ -26,14 +26,13 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussions);
 
-        User.getUser();
         DiscussionsController contactsController = new DiscussionsController(
                 (ListView) findViewById(R.id.discussions_lV),
                 this);
         contactsController.setListeners();
 
         try {
-            contactsController.initContactsUserRequestOnWebServices(getIntent().getStringExtra("token"));
+            contactsController.initContactsUserRequestOnWebServices();
         }
 
         catch (InterruptedException e) {
@@ -56,10 +55,9 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
 
     @Override
     public void getConversation(String key) {
-        Contact contactSelectioned = User.getUser().getContacts().get(key);
+        User.getUser().setContactSelectioned(User.getUser().getContacts().get(key));
         Intent listContactsAcvitity = new Intent(DiscussionsActivity.this, DiscussionActivity.class);
-        listContactsAcvitity.putExtra("contact", String.valueOf(contactSelectioned.getId()));
-        listContactsAcvitity.putExtra("token", getIntent().getStringExtra("token"));
+
         startActivity(listContactsAcvitity);
     }
 

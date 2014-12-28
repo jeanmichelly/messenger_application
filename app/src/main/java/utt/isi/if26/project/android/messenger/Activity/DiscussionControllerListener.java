@@ -8,6 +8,7 @@ import android.widget.ListView;
 public interface DiscussionControllerListener {
 
     public void update(ListView discussionLv);
+    public void sendMessage();
     public void wrongRequest();
 
 }

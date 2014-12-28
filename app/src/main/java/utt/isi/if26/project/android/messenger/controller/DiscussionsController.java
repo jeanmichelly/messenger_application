@@ -35,11 +35,11 @@ public class DiscussionsController implements OnItemClickListener {
         listener.getConversation(((TextView) arg1).getText().toString());
     }
 
-    public void initContactsUserRequestOnWebServices(String token) throws JSONException, InterruptedException, ExecutionException {
+    public void initContactsUserRequestOnWebServices() throws JSONException, InterruptedException, ExecutionException {
         WebServices request = new WebServices();
-        WebServices.addParameter("token", token);
+        WebServices.addParameter("token", User.getUser().getToken());
         request.execute(Util.DISCUSSIONS_URL);
-        System.out.println(request.get());
+
         try {
             if (!DiscussionsJSONParser.error(request)) {
                 DiscussionsJSONParser.initRequestToJSONArray(request);
@@ -47,18 +47,20 @@ public class DiscussionsController implements OnItemClickListener {
                 Contact c;
 
                 for (int i = 0; i < DiscussionsJSONParser.length(); i++) {
-                    c = new Contact(
-                            DiscussionsJSONParser.getIdFromContact(i),
-                            DiscussionsJSONParser.getEmail(DiscussionsJSONParser.getContact(i)),
-                            DiscussionsJSONParser.getFirstName(DiscussionsJSONParser.getContact(i)),
-                            DiscussionsJSONParser.getLastName(DiscussionsJSONParser.getContact(i)),
-                            new Message(
-                                    DiscussionsJSONParser.getContenu(DiscussionsJSONParser.getMessageFromContact(i)),
-                                    DiscussionsJSONParser.getDate(DiscussionsJSONParser.getMessageFromContact(i)),
-                                    DiscussionsJSONParser.isSent(DiscussionsJSONParser.getMessageFromContact(i))
-                            )
-                    );
-                    User.getUser().addContact(c.getFirstName() + " " + c.getLastName() + "\n\n" + c.getLastMessage().messageView(), c);
+                    if ( DiscussionsJSONParser.hasDiscussion(i) ) {
+                        c = new Contact(
+                                DiscussionsJSONParser.getIdFromContact(i),
+                                DiscussionsJSONParser.getEmail(DiscussionsJSONParser.getContact(i)),
+                                DiscussionsJSONParser.getFirstName(DiscussionsJSONParser.getContact(i)),
+                                DiscussionsJSONParser.getLastName(DiscussionsJSONParser.getContact(i)),
+                                new Message(
+                                        DiscussionsJSONParser.getContenu(DiscussionsJSONParser.getMessageFromContact(i)),
+                                        DiscussionsJSONParser.getDate(DiscussionsJSONParser.getMessageFromContact(i)),
+                                        DiscussionsJSONParser.isSent(DiscussionsJSONParser.getMessageFromContact(i))
+                                )
+                        );
+                        User.getUser().addContact(c.getFirstName() + " " + c.getLastName() + "\n\n" + c.getLastMessage().messageView(), c);
+                    }
                 }
                 listener.update(discussionsView.getDiscussions());
             } else {

@@ -12,10 +12,13 @@ public class User extends Contact {
     private static User uniqueInstance = null;
     static private Map<String, Contact> listContacts;
     static private ArrayList<Message> conversation;
+    static private String token;
+    static private Contact contactSelectioned;
 
     public User () {
         listContacts = new HashMap<String, Contact>();
         conversation = new ArrayList<Message>();
+        contactSelectioned = new Contact();
     }
 
     public static User getUser() {
@@ -40,5 +43,13 @@ public class User extends Contact {
     }
 
     public ArrayList<Message> getConversation () { return conversation; }
+
+    public String getToken() { return token; }
+
+    public Contact getContactSelectioned() { return contactSelectioned; }
+
+    public void setToken(String token) { User.token = token; }
+
+    public void setContactSelectioned(Contact contactSelectioned) { User.contactSelectioned = contactSelectioned; }
 
 }

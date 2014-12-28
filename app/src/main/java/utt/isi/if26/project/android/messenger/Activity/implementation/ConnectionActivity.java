@@ -14,6 +14,7 @@ import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.ConnectionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.ConnectionController;
+import utt.isi.if26.project.android.messenger.model.User;
 import utt.isi.if26.project.android.messenger.parser.ConnectionJSONParser;
 
 
@@ -34,10 +35,9 @@ public class ConnectionActivity extends Activity implements ConnectionController
 
     @Override
     public void onLoginSuccess() {
-
         Intent intent = new Intent(this, DiscussionsActivity.class);
         try {
-            intent.putExtra("token", ConnectionJSONParser.getToken());
+            User.getUser().setToken(ConnectionJSONParser.getToken());
         } catch (JSONException e) {
             e.printStackTrace();
         }

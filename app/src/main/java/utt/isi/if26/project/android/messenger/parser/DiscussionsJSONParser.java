@@ -46,6 +46,8 @@ public class DiscussionsJSONParser {
         return new JSONObject(requestToJSONArray.getString(i)).getInt("id");
     }
 
+    public static boolean hasDiscussion (int i) throws JSONException { return !new JSONObject(requestToJSONArray.getString(i)).isNull("message"); }
+
     public static JSONObject getMessageFromContact(int i) throws JSONException {
         return new JSONObject(new JSONObject(requestToJSONArray.getString(i)).getString("message"));
     }
