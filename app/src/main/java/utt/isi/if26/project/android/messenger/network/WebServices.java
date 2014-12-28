@@ -32,8 +32,14 @@ public class WebServices extends AsyncTask<String, String, String> {
         JSONParser jsonParser = new JSONParser();
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("email", parameters.get("email")));
-        params.add(new BasicNameValuePair("password", parameters.get("password")));
+
+        if (!parameters.isEmpty()) {
+            Iterator parametersIter = parameters.entrySet().iterator();
+            while (parametersIter.hasNext()) {
+                Entry parameter = (Entry) parametersIter.next();
+                params.add(new BasicNameValuePair(parameter.getKey().toString(), parameter.getValue().toString()));
+            }
+        }
 
         JSONObject json = jsonParser.makeHttpRequest(uris[0],
                 "GET", params);

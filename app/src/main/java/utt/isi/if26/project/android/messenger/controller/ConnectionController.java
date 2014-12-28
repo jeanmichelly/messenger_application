@@ -32,7 +32,7 @@ public class ConnectionController implements OnClickListener {
     @Override
     public void onClick(View view) {
         // Check for a valid email address.
-/*
+
         if (connectionView.getLogin().isEmpty() || connectionView.getLogin().equals(""))
             connectionView.setLoginError(ErrorConstants.ERROR_FIELD_REQUIRED);
         else if (!connectionView.getLogin().contains("@"))
@@ -44,7 +44,7 @@ public class ConnectionController implements OnClickListener {
             connectionView.setPasswordError(ErrorConstants.ERROR_FIELD_REQUIRED);
         else if (connectionView.getPassword().length() < 3)
             connectionView.setPasswordError(ErrorConstants.ERROR_INVALID_PASSWORD);
-        else {*/
+        else {
             try {
                 signInRequestOnWebServices();
             }
@@ -56,7 +56,7 @@ public class ConnectionController implements OnClickListener {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-     //  }
+        }
     }
 
     public void signInRequestOnWebServices() throws JSONException, InterruptedException, ExecutionException {
@@ -64,7 +64,7 @@ public class ConnectionController implements OnClickListener {
 
         WebServices.addParameter("email", connectionView.getLogin());
         WebServices.addParameter("password", connectionView.getPassword());
-        request.execute(Util.signInURL);
+        request.execute(Util.SIGN_IN_URL);
 
         if (!ConnectionJSONParser.error(request)) {
             ConnectionJSONParser.initRequestToJSONArray(request);

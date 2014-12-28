@@ -38,6 +38,10 @@
             android:name="utt.isi.if26.project.android.messenger.Activity.implementation.NewGroupActivity"
             android:label="@string/title_activity_new_group" >
         </activity>
+        <activity
+            android:name="utt.isi.if26.project.android.messenger.Activity.implementation.DiscussionActivity"
+            android:label="@string/title_activity_discussion" >
+        </activity>
     </application>
 
 </manifest>

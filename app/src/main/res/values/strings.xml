@@ -19,5 +19,6 @@
     <string name="menu_group_discussion">Groups</string>
     <string name="menu_add_contact">Add contact</string>
     <string name="menu_remove_contact">Remove</string>
+    <string name="title_activity_discussion">Discussion</string>
 
 </resources>

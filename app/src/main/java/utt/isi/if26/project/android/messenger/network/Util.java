@@ -5,8 +5,8 @@ package utt.isi.if26.project.android.messenger.network;
  */
 public class Util {
 
-    public static String signInURL = "http://sd-48995.dedibox.fr/jeanmi/login.php";
-    public static String contactsURL = "http://localhost:8888/messenger_server/contacts.php";
-    public static String messagesURL = "http://localhost:8888/messenger_server/messages.php";
+    final public static String SIGN_IN_URL = "http://sd-48995.dedibox.fr/jeanmi/login.php";
+    final public static String DISCUSSIONS_URL = "http://sd-48995.dedibox.fr/jeanmi/discussions.php";
+    final public static String DISCUSSION_URL = "http://sd-48995.dedibox.fr/jeanmi/discussion.php";
 
 }
