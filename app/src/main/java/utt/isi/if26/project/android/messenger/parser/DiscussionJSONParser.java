@@ -38,6 +38,10 @@ public class DiscussionJSONParser {
         return messageJSONObject.getString("date");
     }
 
+    public static int getAuthor (JSONObject messageJSONObject) throws JSONException {
+        return Integer.valueOf(messageJSONObject.getString("user"));
+    }
+
     public static boolean isSent (JSONObject messageJSONObject) throws JSONException {
         return messageJSONObject.getBoolean("sent");
     }

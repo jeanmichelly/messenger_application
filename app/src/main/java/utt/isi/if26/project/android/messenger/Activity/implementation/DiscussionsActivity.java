@@ -13,7 +13,6 @@ import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionsControllerListener;
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.DiscussionsController;
-import utt.isi.if26.project.android.messenger.model.Contact;
 import utt.isi.if26.project.android.messenger.model.User;
 
 import java.util.concurrent.ExecutionException;

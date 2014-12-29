@@ -11,6 +11,7 @@ public class Message {
     private String contenu;
     private String date;
     private boolean sent;
+    private int author;
 
     public Message (String contenu, String date, boolean sent) {
         this.contenu = contenu;
@@ -18,8 +19,27 @@ public class Message {
         this.sent = sent;
     }
 
+    public Message (String contenu, String date, boolean sent, int author) {
+        this.contenu = contenu;
+        this.date = date;
+        this.sent = sent;
+        this.author = author;
+    }
+
     public String booleanToString () {
         return sent ? "Envoyé":"Non envoyé";
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public int getAuthor() {
+        return author;
     }
 
     public String messageView () {

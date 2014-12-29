@@ -24,6 +24,10 @@ public class DiscussionView {
         sendMessageB.setOnClickListener(onClickListener);
     }
 
+    public EditText getMessage () {
+        return messageEt;
+    }
+
     public ListView getDiscussion () {
         return discussionLv;
     }

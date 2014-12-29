@@ -2,11 +2,13 @@ package utt.isi.if26.project.android.messenger.controller;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
+import utt.isi.if26.project.android.messenger.Activity.implementation.DiscussionArrayAdapter;
 import utt.isi.if26.project.android.messenger.model.Contact;
 import utt.isi.if26.project.android.messenger.model.Message;
 import utt.isi.if26.project.android.messenger.model.User;
@@ -15,6 +17,7 @@ import utt.isi.if26.project.android.messenger.network.WebServices;
 import utt.isi.if26.project.android.messenger.parser.DiscussionJSONParser;
 import utt.isi.if26.project.android.messenger.view.DiscussionView;
 
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -24,10 +27,15 @@ public class DiscussionController implements OnClickListener {
 
 
     private DiscussionView discussionView;
+    private DiscussionArrayAdapter discussionArrayAdapter;
     private DiscussionControllerListener listener;
 
-    public DiscussionController (ListView discussionLv, EditText messageEt, Button sendMessageB, DiscussionControllerListener listener) {
+    public DiscussionController (ListView discussionLv, DiscussionArrayAdapter discussionArrayAdapter, EditText messageEt, Button sendMessageB, DiscussionControllerListener listener) {
+        this.discussionArrayAdapter = discussionArrayAdapter;
+        discussionLv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        discussionLv.setAdapter(discussionArrayAdapter);
         this.discussionView = new DiscussionView(discussionLv, messageEt, sendMessageB);
+
         this.listener = listener;
     }
 
@@ -45,12 +53,17 @@ public class DiscussionController implements OnClickListener {
                     Message message = new Message(
                             DiscussionJSONParser.getContenu(DiscussionJSONParser.getMessage(i)),
                             DiscussionJSONParser.getDate(DiscussionJSONParser.getMessage(i)),
-                            DiscussionJSONParser.isSent(DiscussionJSONParser.getMessage(i))
+                            DiscussionJSONParser.isSent(DiscussionJSONParser.getMessage(i)),
+                            DiscussionJSONParser.getAuthor(DiscussionJSONParser.getMessage(i))
                     );
 
                     User.getUser().addMessageConversation(message);
                 }
-                listener.update(discussionView.getDiscussion());
+                Iterator<Message> iter = User.getUser().getConversation().iterator();
+
+                while (iter.hasNext()) {
+                    discussionArrayAdapter.add(iter.next());
+                }
             } else {
                 listener.wrongRequest();
             }
@@ -69,6 +82,7 @@ public class DiscussionController implements OnClickListener {
     @Override
     public void onClick(View view) {
         listener.sendMessage();
+
 
         WebServices request = new WebServices();
         WebServices.addParameter("token", User.getUser().getToken());

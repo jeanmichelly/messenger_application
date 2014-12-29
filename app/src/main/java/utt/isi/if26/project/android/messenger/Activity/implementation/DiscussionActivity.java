@@ -6,19 +6,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.DiscussionController;
 import utt.isi.if26.project.android.messenger.model.Message;
-import utt.isi.if26.project.android.messenger.model.User;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 public class DiscussionActivity extends Activity implements DiscussionControllerListener {
@@ -28,8 +22,11 @@ public class DiscussionActivity extends Activity implements DiscussionController
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion);
 
+        DiscussionArrayAdapter discussionArrayAdapter = new DiscussionArrayAdapter(getApplicationContext(), R.layout.activity_discussion_singlemessage);
+
         DiscussionController discussionController = new DiscussionController(
                 (ListView) findViewById(R.id.discussion_lV),
+                discussionArrayAdapter,
                 (EditText) findViewById(R.id.send_message_eT),
                 (Button) findViewById(R.id.send_message_b),
                 this);
@@ -51,16 +48,8 @@ public class DiscussionActivity extends Activity implements DiscussionController
     }
 
     @Override
-    public void update(ListView listMessages) {
-        ArrayList<String> messagesView = new ArrayList<String>();
-        Iterator<Message> iter = User.getUser().getConversation().iterator();
+    public void update(Message message) {
 
-        while (iter.hasNext()) {
-            messagesView.add(iter.next().messageView());
-        }
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, messagesView);
-        listMessages.setAdapter(adapter);
     }
 
     @Override

@@ -20,6 +20,10 @@ public class ConnectionJSONParser {
         return new JSONObject( r.get() ).getString("error").equals("false") ? false : true;
     }
 
+    public static int getId () throws JSONException {
+        return Integer.valueOf(requestToJSON.getString("id"));
+    }
+
     public static String getToken () throws JSONException {
         return requestToJSON.getString("token");
     }

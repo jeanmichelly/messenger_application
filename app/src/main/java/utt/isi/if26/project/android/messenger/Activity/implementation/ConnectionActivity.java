@@ -38,6 +38,7 @@ public class ConnectionActivity extends Activity implements ConnectionController
         Intent intent = new Intent(this, DiscussionsActivity.class);
         try {
             User.getUser().setToken(ConnectionJSONParser.getToken());
+            User.getUser().setId(ConnectionJSONParser.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
