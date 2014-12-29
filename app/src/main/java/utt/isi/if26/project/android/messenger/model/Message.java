@@ -30,6 +30,10 @@ public class Message {
         return sent ? "Envoyé":"Non envoyé";
     }
 
+    public String getContenu() {
+        return contenu;
+    }
+
     public String getDate() {
         return date;
     }

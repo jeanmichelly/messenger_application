@@ -48,6 +48,7 @@ public class DiscussionsController implements OnItemClickListener {
 
                 for (int i = 0; i < DiscussionsJSONParser.length(); i++) {
                     if ( DiscussionsJSONParser.hasDiscussion(i) ) {
+
                         c = new Contact(
                                 DiscussionsJSONParser.getIdFromContact(i),
                                 DiscussionsJSONParser.getEmail(DiscussionsJSONParser.getContact(i)),

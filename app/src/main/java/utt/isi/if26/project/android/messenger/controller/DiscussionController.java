@@ -8,8 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
-import utt.isi.if26.project.android.messenger.Activity.implementation.DiscussionArrayAdapter;
-import utt.isi.if26.project.android.messenger.model.Contact;
+import utt.isi.if26.project.android.messenger.view.DiscussionArrayAdapter;
 import utt.isi.if26.project.android.messenger.model.Message;
 import utt.isi.if26.project.android.messenger.model.User;
 import utt.isi.if26.project.android.messenger.network.Util;
@@ -17,6 +16,8 @@ import utt.isi.if26.project.android.messenger.network.WebServices;
 import utt.isi.if26.project.android.messenger.parser.DiscussionJSONParser;
 import utt.isi.if26.project.android.messenger.view.DiscussionView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
@@ -83,12 +84,20 @@ public class DiscussionController implements OnClickListener {
     public void onClick(View view) {
         listener.sendMessage();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Message m = new Message(discussionView.getMessage().getText().toString(), dateFormat.format(new Date()),true, User.getUser().getId());
+
+        User.getUser().addMessage(m);
 
         WebServices request = new WebServices();
         WebServices.addParameter("token", User.getUser().getToken());
         WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
-        WebServices.addParameter("message", "toto");
+        WebServices.addParameter("message", m.getContenu());
         request.execute(Util.MESSAGE_URL);
+
+        discussionArrayAdapter.add(m);
+        discussionView.getMessage().setText("");
     }
 
     public void setListeners () {

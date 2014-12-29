@@ -55,6 +55,7 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
     @Override
     public void getConversation(String key) {
         User.getUser().setContactSelectioned(User.getUser().getContacts().get(key));
+
         Intent listContactsAcvitity = new Intent(DiscussionsActivity.this, DiscussionActivity.class);
 
         startActivity(listContactsAcvitity);

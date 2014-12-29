@@ -1,4 +1,4 @@
-package utt.isi.if26.project.android.messenger.Activity.implementation;
+package utt.isi.if26.project.android.messenger.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -43,8 +43,6 @@ public class DiscussionArrayAdapter extends ArrayAdapter<Message> {
         Message chatMessageObj = getItem(position);
         chatText = (TextView) row.findViewById(R.id.singleMessage);
         chatText.setText(chatMessageObj.messageView());
-        chatText.setBackgroundResource(R.drawable.bubble_a);
-        System.out.println("ID AUTHOR : "+chatMessageObj.getAuthor()+ " "+User.getUser().getId());
         chatText.setBackgroundResource(chatMessageObj.getAuthor() == User.getUser().getId() ? R.drawable.bubble_a : R.drawable.bubble_b);
         singleMessageContainer.setGravity(chatMessageObj.getAuthor() == User.getUser().getId() ? Gravity.RIGHT : Gravity.LEFT);
         return row;

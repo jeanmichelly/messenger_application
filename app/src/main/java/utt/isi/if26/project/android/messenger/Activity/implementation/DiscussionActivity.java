@@ -10,6 +10,7 @@ import android.widget.*;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
+import utt.isi.if26.project.android.messenger.view.DiscussionArrayAdapter;
 import utt.isi.if26.project.android.messenger.controller.DiscussionController;
 import utt.isi.if26.project.android.messenger.model.Message;
 
