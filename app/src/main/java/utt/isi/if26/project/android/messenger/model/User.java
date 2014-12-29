@@ -28,6 +28,10 @@ public class User extends Contact {
         return uniqueInstance;
     }
 
+    public void initContacts () {
+        listContacts = new HashMap<String, Contact>();
+    }
+
     public void initConversation () {
         conversation = new ArrayList<Message>();
     }

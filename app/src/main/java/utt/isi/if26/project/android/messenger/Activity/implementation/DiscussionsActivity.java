@@ -20,15 +20,40 @@ import java.util.concurrent.ExecutionException;
 
 public class DiscussionsActivity extends Activity implements DiscussionsControllerListener {
 
+    DiscussionsController contactsController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussions);
 
-        DiscussionsController contactsController = new DiscussionsController(
+        contactsController = new DiscussionsController(
                 (ListView) findViewById(R.id.discussions_lV),
                 this);
         contactsController.setListeners();
+
+        try {
+            contactsController.initContactsUserRequestOnWebServices();
+        }
+
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        User.getUser().initContacts();
+        User.getUser().initConversation();
 
         try {
             contactsController.initContactsUserRequestOnWebServices();
