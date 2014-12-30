@@ -1,8 +1,9 @@
 package utt.isi.if26.project.android.messenger.Activity.implementation;
 
-import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,12 +19,17 @@ import java.util.concurrent.ExecutionException;
 
 public class DiscussionActivity extends Activity implements DiscussionControllerListener {
 
+    private static NotificationManager notificationManager;
+    private static int notifyId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion);
 
         DiscussionArrayAdapter discussionArrayAdapter = new DiscussionArrayAdapter(getApplicationContext(), R.layout.activity_discussion_singlemessage);
+        notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notifyId = 1;
 
         DiscussionController discussionController = new DiscussionController(
                 (ListView) findViewById(R.id.discussion_lV),
@@ -49,13 +55,17 @@ public class DiscussionActivity extends Activity implements DiscussionController
     }
 
     @Override
-    public void update(Message message) {
+    public void notifyMessageSended(Message m) {
+        Notification notification = new Notification(R.drawable.ic_launcher, "Message envoyé", System.currentTimeMillis());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, DiscussionActivity.class), 0);
 
-    }
+        String notificationTitle = "Message envoyé";
+        String notificationContenu = m.getContenu()+"\n"+m.getDate();
 
-    @Override
-    public void sendMessage() {
+        notification.setLatestEventInfo(this, notificationTitle, notificationContenu, pendingIntent);
+        notification.vibrate = new long[] {0,200,100,200,100,200};
 
+        notificationManager.notify(notifyId++, notification);
     }
 
     @Override

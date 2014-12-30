@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
+import utt.isi.if26.project.android.messenger.parser.MessageJSONParser;
 import utt.isi.if26.project.android.messenger.view.DiscussionArrayAdapter;
 import utt.isi.if26.project.android.messenger.model.Message;
 import utt.isi.if26.project.android.messenger.model.User;
@@ -82,7 +83,6 @@ public class DiscussionController implements OnClickListener {
 
     @Override
     public void onClick(View view) {
-        listener.sendMessage();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -96,8 +96,23 @@ public class DiscussionController implements OnClickListener {
         WebServices.addParameter("message", m.getContenu());
         request.execute(Util.MESSAGE_URL);
 
-        discussionArrayAdapter.add(m);
-        discussionView.getMessage().setText("");
+        try {
+            if ( !MessageJSONParser.error(request) ) {
+                discussionArrayAdapter.add(m);
+                discussionView.getMessage().setText("");
+                listener.notifyMessageSended(m);
+            }
+        }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void setListeners () {

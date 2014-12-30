@@ -7,8 +7,7 @@ import utt.isi.if26.project.android.messenger.model.Message;
  */
 public interface DiscussionControllerListener {
 
-    public void update(Message message);
-    public void sendMessage();
+    public void notifyMessageSended(Message m);
     public void wrongRequest();
 
 }
