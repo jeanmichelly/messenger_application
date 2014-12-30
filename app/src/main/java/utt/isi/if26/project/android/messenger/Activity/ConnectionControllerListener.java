@@ -5,6 +5,8 @@ package utt.isi.if26.project.android.messenger.Activity;
  */
 public interface ConnectionControllerListener {
 
+    public boolean isNetworkAvailable();
+    public void networkIsUnavailable();
     public void onLoginSuccess();
     public void onLoginFailed();
 

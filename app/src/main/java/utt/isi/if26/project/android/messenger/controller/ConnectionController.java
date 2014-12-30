@@ -33,29 +33,31 @@ public class ConnectionController implements OnClickListener {
     public void onClick(View view) {
         // Check for a valid email address.
 
-        if (connectionView.getLogin().isEmpty() || connectionView.getLogin().equals(""))
-            connectionView.setLoginError(ErrorConstants.ERROR_FIELD_REQUIRED);
-        else if (!connectionView.getLogin().contains("@"))
-            connectionView.setLoginError(ErrorConstants.ERROR_INVALID_EMAIL);
-        else if (!EmailValidator.validate(connectionView.getLogin()))
-            connectionView.setLoginError(ErrorConstants.ERROR_INVALID_EMAIL);
+        if ( listener.isNetworkAvailable() ) {
+            if (connectionView.getLogin().isEmpty() || connectionView.getLogin().equals(""))
+                connectionView.setLoginError(ErrorConstants.ERROR_FIELD_REQUIRED);
+            else if (!connectionView.getLogin().contains("@"))
+                connectionView.setLoginError(ErrorConstants.ERROR_INVALID_EMAIL);
+            else if (!EmailValidator.validate(connectionView.getLogin()))
+                connectionView.setLoginError(ErrorConstants.ERROR_INVALID_EMAIL);
 
-        if (connectionView.getPassword().isEmpty() || connectionView.getPassword().equals(""))
-            connectionView.setPasswordError(ErrorConstants.ERROR_FIELD_REQUIRED);
-        else if (connectionView.getPassword().length() < 3)
-            connectionView.setPasswordError(ErrorConstants.ERROR_INVALID_PASSWORD);
-        else {
-            try {
-                signInRequestOnWebServices();
+            if (connectionView.getPassword().isEmpty() || connectionView.getPassword().equals(""))
+                connectionView.setPasswordError(ErrorConstants.ERROR_FIELD_REQUIRED);
+            else if (connectionView.getPassword().length() < 3)
+                connectionView.setPasswordError(ErrorConstants.ERROR_INVALID_PASSWORD);
+            else {
+                try {
+                    signInRequestOnWebServices();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
-
-            catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        } else {
+            listener.networkIsUnavailable();
         }
     }
 
