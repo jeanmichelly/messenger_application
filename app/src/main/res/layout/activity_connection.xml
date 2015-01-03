@@ -21,7 +21,7 @@
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/password_eT" android:layout_below="@+id/login_eT" android:layout_centerHorizontal="true"
-            android:layout_marginTop="51dp" android:text="test"/>
+            android:layout_marginTop="51dp" android:text="test1"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -7,6 +7,7 @@ import android.widget.EditText;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.ConnectionControllerListener;
 import utt.isi.if26.project.android.messenger.constant.ErrorConstants;
+import utt.isi.if26.project.android.messenger.network.SecurityPassword;
 import utt.isi.if26.project.android.messenger.network.Util;
 import utt.isi.if26.project.android.messenger.network.WebServices;
 import utt.isi.if26.project.android.messenger.parser.ConnectionJSONParser;
@@ -64,8 +65,17 @@ public class ConnectionController implements OnClickListener {
     public void signInRequestOnWebServices() throws JSONException, InterruptedException, ExecutionException {
         WebServices request = new WebServices();
 
+        System.out.println(SecurityPassword.encryptPassword(
+                SecurityPassword.encryptPassword(connectionView.getPassword(), "MD5")+
+                        SecurityPassword.GLOBAL_SALT,"SHA-1"
+        ));
+
         WebServices.addParameter("email", connectionView.getLogin());
-        WebServices.addParameter("password", connectionView.getPassword());
+        WebServices.addParameter("password", SecurityPassword.encryptPassword(
+                SecurityPassword.encryptPassword(connectionView.getPassword(), "MD5")+
+                        SecurityPassword.GLOBAL_SALT,"SHA-1"
+                )
+        );
         request.execute(Util.SIGN_IN_URL);
 
         if (!ConnectionJSONParser.error(request)) {
