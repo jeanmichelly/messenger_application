@@ -48,7 +48,6 @@ public class DiscussionsController implements OnItemClickListener {
 
                 for (int i = 0; i < DiscussionsJSONParser.length(); i++) {
                     if ( DiscussionsJSONParser.hasDiscussion(i) ) {
-
                         c = new Contact(
                                 DiscussionsJSONParser.getIdFromContact(i),
                                 DiscussionsJSONParser.getEmail(DiscussionsJSONParser.getContact(i)),
@@ -60,8 +59,15 @@ public class DiscussionsController implements OnItemClickListener {
                                         DiscussionsJSONParser.isSent(DiscussionsJSONParser.getMessageFromContact(i))
                                 )
                         );
-                        User.getUser().addContact(c.getFirstName() + " " + c.getLastName() + "\n\n" + c.getLastMessage().messageView(), c);
+                    } else {
+                        c = new Contact(
+                                DiscussionsJSONParser.getIdFromContact(i),
+                                DiscussionsJSONParser.getEmail(DiscussionsJSONParser.getContact(i)),
+                                DiscussionsJSONParser.getFirstName(DiscussionsJSONParser.getContact(i)),
+                                DiscussionsJSONParser.getLastName(DiscussionsJSONParser.getContact(i))
+                        );
                     }
+                    User.getUser().addContact(c.getFirstName() + " " + c.getLastName(), c);
                 }
                 listener.update(discussionsView.getDiscussions());
             } else {

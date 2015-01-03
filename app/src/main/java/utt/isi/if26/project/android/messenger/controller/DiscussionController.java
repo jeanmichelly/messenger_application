@@ -45,6 +45,7 @@ public class DiscussionController implements OnClickListener {
         WebServices request = new WebServices();
         WebServices.addParameter("token", User.getUser().getToken());
         WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
+
         request.execute(Util.DISCUSSION_URL);
         User.getUser().initConversation();
         try {

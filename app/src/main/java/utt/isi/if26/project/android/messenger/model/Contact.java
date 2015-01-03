@@ -42,6 +42,8 @@ public class Contact {
         return messages.get(0);
     }
 
+    public boolean hasMessage () { return !messages.isEmpty(); }
+
     public int getId() {
         return id;
     }

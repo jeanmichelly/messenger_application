@@ -13,27 +13,31 @@ import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionsControllerListener;
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.DiscussionsController;
+import utt.isi.if26.project.android.messenger.model.Contact;
+import utt.isi.if26.project.android.messenger.model.Message;
 import utt.isi.if26.project.android.messenger.model.User;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
 public class DiscussionsActivity extends Activity implements DiscussionsControllerListener {
 
-    DiscussionsController contactsController;
+    DiscussionsController discussionsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussions);
 
-        contactsController = new DiscussionsController(
+        discussionsController = new DiscussionsController(
                 (ListView) findViewById(R.id.discussions_lV),
                 this);
-        contactsController.setListeners();
+        discussionsController.setListeners();
 
         try {
-            contactsController.initContactsUserRequestOnWebServices();
+            discussionsController.initContactsUserRequestOnWebServices();
         }
 
         catch (InterruptedException e) {
@@ -56,7 +60,7 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
         User.getUser().initConversation();
 
         try {
-            contactsController.initContactsUserRequestOnWebServices();
+            discussionsController.initContactsUserRequestOnWebServices();
         }
 
         catch (InterruptedException e) {
@@ -73,13 +77,20 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
 
     @Override
     public void update(ListView listContacts) {
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, User.getUser().getContacts().keySet().toArray());
+        ArrayList<String> discussions = new ArrayList<String>();
+
+        for (Map.Entry<String, Contact> entry : User.getUser().getContacts().entrySet()) {
+            if (entry.getValue().hasMessage())
+                discussions.add(entry.getKey() + "\n\n" + User.getUser().getContacts().get(entry.getKey()).getLastMessage().messageView());
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, discussions);
         listContacts.setAdapter(adapter);
     }
 
     @Override
     public void getConversation(String key) {
-        User.getUser().setContactSelectioned(User.getUser().getContacts().get(key));
+
+        User.getUser().setContactSelectioned(User.getUser().getContacts().get(key.split("\n")[0]));
 
         Intent listContactsAcvitity = new Intent(DiscussionsActivity.this, DiscussionActivity.class);
 
@@ -89,7 +100,7 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
     public void wrongRequest() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Requête incorrecte");
-        alertDialog.setMessage("Veuillez vérifier les paramètres ou leurs valeurs");
+        alertDialog.setMessage("Veuillez vérifier ales paramètres ou leurs valeurs");
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // here you can add functions

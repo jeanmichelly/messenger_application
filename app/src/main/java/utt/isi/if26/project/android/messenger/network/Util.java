@@ -9,5 +9,6 @@ public class Util {
     final public static String DISCUSSIONS_URL = "http://sd-48995.dedibox.fr/jeanmi/discussions.php";
     final public static String DISCUSSION_URL = "http://sd-48995.dedibox.fr/jeanmi/discussion.php";
     final public static String MESSAGE_URL = "http://sd-48995.dedibox.fr/jeanmi/message.php";
+    final public static String CONTACTS_URL = "http://sd-48995.dedibox.fr/jeanmi/contacts.php";
 
 }

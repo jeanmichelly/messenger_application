@@ -45,7 +45,7 @@ public class ConnectionActivity extends Activity implements ConnectionController
     }
 
     @Override
-    public void networkIsUnavailable() {
+        public void networkIsUnavailable() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Echec de connexion");
         alertDialog.setMessage("Vérifier votre connexion internet");
