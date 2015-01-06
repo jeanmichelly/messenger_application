@@ -9,6 +9,8 @@ public interface DiscussionsControllerListener {
 
     public void update(ListView discussionsLv);
     public void getConversation(String key);
+    public boolean isNetworkAvailable();
+    public void networkIsUnavailable();
     public void wrongRequest();
 
 }
