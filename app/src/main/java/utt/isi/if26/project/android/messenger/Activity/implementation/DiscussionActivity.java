@@ -13,6 +13,7 @@ import android.widget.*;
 import org.json.JSONException;
 import utt.isi.if26.project.android.messenger.Activity.DiscussionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
+import utt.isi.if26.project.android.messenger.model.User;
 import utt.isi.if26.project.android.messenger.view.DiscussionArrayAdapter;
 import utt.isi.if26.project.android.messenger.controller.DiscussionController;
 import utt.isi.if26.project.android.messenger.model.Message;
@@ -29,6 +30,7 @@ public class DiscussionActivity extends Activity implements DiscussionController
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discussion);
 
+        getActionBar().setTitle(User.getUser().getContactSelectioned().getFirstName()+" "+User.getUser().getContactSelectioned().getLastName());
         DiscussionArrayAdapter discussionArrayAdapter = new DiscussionArrayAdapter(getApplicationContext(), R.layout.activity_discussion_singlemessage);
         notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notifyId = 1;
