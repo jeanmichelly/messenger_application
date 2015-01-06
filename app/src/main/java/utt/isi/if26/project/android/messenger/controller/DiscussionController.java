@@ -56,7 +56,7 @@ public class DiscussionController implements OnClickListener {
                     Message message = new Message(
                             DiscussionJSONParser.getContenu(DiscussionJSONParser.getMessage(i)),
                             DiscussionJSONParser.getDate(DiscussionJSONParser.getMessage(i)),
-                            DiscussionJSONParser.isSent(DiscussionJSONParser.getMessage(i)),
+                            true,
                             DiscussionJSONParser.getAuthor(DiscussionJSONParser.getMessage(i))
                     );
 
@@ -87,32 +87,41 @@ public class DiscussionController implements OnClickListener {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Message m = new Message(discussionView.getMessage().getText().toString(), dateFormat.format(new Date()),true, User.getUser().getId());
+        if (!listener.isNetworkAvailable()) {
+            Message m = new Message(discussionView.getMessage().getText().toString(), dateFormat.format(new Date()),false, User.getUser().getId());
+            User.getUser().addMessage(m);
+            discussionArrayAdapter.add(m);
+            discussionView.getMessage().setText("");
+            listener.notifyMessageNotSended(m);
+        } else {
 
-        User.getUser().addMessage(m);
+            Message m = new Message(discussionView.getMessage().getText().toString(), dateFormat.format(new Date()), true, User.getUser().getId());
 
-        WebServices request = new WebServices();
-        WebServices.addParameter("token", User.getUser().getToken());
-        WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
-        WebServices.addParameter("message", m.getContenu());
-        request.execute(Util.MESSAGE_URL);
+            User.getUser().addMessage(m);
 
-        try {
-            if ( !MessageJSONParser.error(request) ) {
-                discussionArrayAdapter.add(m);
-                discussionView.getMessage().setText("");
-                listener.notifyMessageSended(m);
+            System.out.println(String.valueOf(User.getUser().getContactSelectioned().getId()));
+            WebServices request = new WebServices();
+            WebServices.addParameter("token", User.getUser().getToken());
+            WebServices.addParameter("contact", String.valueOf(User.getUser().getContactSelectioned().getId()));
+            WebServices.addParameter("message", m.getContenu());
+            request.execute(Util.MESSAGE_URL);
+
+            try {
+                if (!MessageJSONParser.error(request)) {
+                    discussionArrayAdapter.add(m);
+                    discussionView.getMessage().setText("");
+                    listener.notifyMessageSended(m);
+                }
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-        }
-        catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 

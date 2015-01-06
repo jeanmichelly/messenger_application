@@ -8,6 +8,8 @@ import utt.isi.if26.project.android.messenger.model.Message;
 public interface DiscussionControllerListener {
 
     public void notifyMessageSended(Message m);
+    public void notifyMessageNotSended(Message m);
     public void wrongRequest();
+    public boolean isNetworkAvailable();
 
 }

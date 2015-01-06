@@ -56,9 +56,10 @@ public class DiscussionsController implements OnItemClickListener {
                                 new Message(
                                         DiscussionsJSONParser.getContenu(DiscussionsJSONParser.getMessageFromContact(i)),
                                         DiscussionsJSONParser.getDate(DiscussionsJSONParser.getMessageFromContact(i)),
-                                        DiscussionsJSONParser.isSent(DiscussionsJSONParser.getMessageFromContact(i))
+                                        true
                                 )
                         );
+           
                     } else {
                         c = new Contact(
                                 DiscussionsJSONParser.getIdFromContact(i),

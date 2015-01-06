@@ -4,6 +4,8 @@ import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,6 +68,28 @@ public class DiscussionActivity extends Activity implements DiscussionController
         notification.vibrate = new long[] {0,200,100,200,100,200};
 
         notificationManager.notify(notifyId++, notification);
+    }
+
+    @Override
+    public void notifyMessageNotSended(Message m) {
+        Notification notification = new Notification(R.drawable.ic_launcher, "Message envoyé", System.currentTimeMillis());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, DiscussionActivity.class), 0);
+
+        String notificationTitle = "Message non envoyé";
+        String notificationContenu = m.getContenu()+"\n"+m.getDate();
+
+        notification.setLatestEventInfo(this, notificationTitle, notificationContenu, pendingIntent);
+        notification.vibrate = new long[] {0,200,100,200,100,200};
+
+        notificationManager.notify(notifyId++, notification);
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @Override
