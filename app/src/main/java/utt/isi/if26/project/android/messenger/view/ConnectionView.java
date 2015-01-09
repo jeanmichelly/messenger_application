@@ -23,6 +23,10 @@ public class ConnectionView {
         signInB.setOnClickListener(onClickListener);
     }
 
+    public EditText getLoginEt() {return loginEt;}
+    public EditText getPasswordEt() {return passwordEt;}
+    public Button getSignInB() {return signInB;}
+
     public String getLogin() {return loginEt.getText().toString();}
     public String   getPassword() {return passwordEt.getText().toString();}
 

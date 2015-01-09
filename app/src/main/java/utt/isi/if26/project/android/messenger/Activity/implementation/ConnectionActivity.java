@@ -18,6 +18,7 @@ import utt.isi.if26.project.android.messenger.Activity.ConnectionControllerListe
 import utt.isi.if26.project.android.messenger.R;
 import utt.isi.if26.project.android.messenger.controller.ConnectionController;
 import utt.isi.if26.project.android.messenger.model.User;
+import utt.isi.if26.project.android.messenger.network.Util;
 import utt.isi.if26.project.android.messenger.parser.ConnectionJSONParser;
 
 

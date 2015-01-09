@@ -23,6 +23,7 @@ public class ConnectionController implements OnClickListener {
 
     private ConnectionView connectionView;
     private ConnectionControllerListener listener;
+    private int counter = Util.attemptsConnection;
 
     public ConnectionController (EditText loginEt, EditText passwordEt, Button signInB, ConnectionControllerListener listener) {
         connectionView = new ConnectionView(loginEt, passwordEt, signInB);
@@ -83,6 +84,12 @@ public class ConnectionController implements OnClickListener {
             listener.onLoginSuccess();
         } else {
             listener.onLoginFailed();
+            counter--;
+            if (counter == 0) {
+                connectionView.getLoginEt().setEnabled(false);
+                connectionView.getPasswordEt().setEnabled(false);
+                connectionView.getSignInB().setEnabled(false);
+            }
         }
     }
 

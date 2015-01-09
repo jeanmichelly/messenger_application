@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class Util {
 
+    final public static int attemptsConnection=4;
     final public static String SIGN_IN_URL = "http://sd-48995.dedibox.fr/jeanmi/login.php";
     final public static String DISCUSSIONS_URL = "http://sd-48995.dedibox.fr/jeanmi/discussions.php";
     final public static String DISCUSSION_URL = "http://sd-48995.dedibox.fr/jeanmi/discussion.php";
