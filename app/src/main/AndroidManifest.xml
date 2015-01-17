@@ -48,6 +48,10 @@
             android:name="utt.isi.if26.project.android.messenger.Activity.implementation.AddContactActivity"
             android:label="@string/title_activity_add_contact" >
         </activity>
+        <activity
+            android:name="utt.isi.if26.project.android.messenger.Activity.implementation.NewDiscussionActivity"
+            android:label="@string/title_activity_new_discussion" >
+        </activity>
     </application>
 
 </manifest>

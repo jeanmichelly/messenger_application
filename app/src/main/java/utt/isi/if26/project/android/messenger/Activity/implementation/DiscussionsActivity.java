@@ -165,6 +165,10 @@ public class DiscussionsActivity extends Activity implements DiscussionsControll
                 intent = new Intent(this, StateActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.menu_new_message:
+                intent = new Intent(this, NewDiscussionActivity.class);
+                startActivity(intent);
+                return true;
             default :
                 return super.onOptionsItemSelected(item);
         }

@@ -21,5 +21,6 @@
     <string name="menu_remove_contact">Remove</string>
     <string name="title_activity_discussion">Discussion</string>
     <string name="title_activity_add_contact">AddContact</string>
+    <string name="title_activity_new_discussion">Sélection contact</string>
 
 </resources>

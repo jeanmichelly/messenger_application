@@ -10,28 +10,45 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import org.json.JSONException;
-import utt.isi.if26.project.android.messenger.Activity.AddContactControllerListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import utt.isi.if26.project.android.messenger.Activity.NewDiscussionControllerListener;
 import utt.isi.if26.project.android.messenger.R;
-import utt.isi.if26.project.android.messenger.controller.AddContactController;
-import utt.isi.if26.project.android.messenger.controller.ConnectionController;
+import utt.isi.if26.project.android.messenger.controller.NewDiscussionController;
+import utt.isi.if26.project.android.messenger.model.Contact;
 import utt.isi.if26.project.android.messenger.model.User;
-import utt.isi.if26.project.android.messenger.parser.ConnectionJSONParser;
 
-public class AddContactActivity extends Activity implements AddContactControllerListener {
+import java.util.ArrayList;
+import java.util.Map;
+
+public class NewDiscussionActivity extends Activity implements NewDiscussionControllerListener {
+
+    NewDiscussionController newDiscussionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
+        setContentView(R.layout.activity_new_discussion);
 
-        AddContactController addContactController = new AddContactController(
-                (EditText) findViewById(R.id.contact_eT),
-                (Button) findViewById(R.id.add_contact_B),
+        newDiscussionController = new NewDiscussionController(
+                (ListView) findViewById(R.id.contacts_no_disccussion_lV),
                 this);
-        addContactController.setListeners();
+        newDiscussionController.setListeners();
+
+        newDiscussionController.initContactsNoDiscussion();
+    }
+
+    @Override
+    public void update(ListView contactsNoDiscussion) {
+        ArrayList<String> discussions = new ArrayList<String>();
+
+
+        for (Map.Entry<String, Contact> entry : User.getUser().getContacts().entrySet()) {
+            if (!entry.getValue().hasMessage())
+                discussions.add(entry.getKey());
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, discussions);
+        contactsNoDiscussion.setAdapter(adapter);
     }
 
     @Override
@@ -56,24 +73,19 @@ public class AddContactActivity extends Activity implements AddContactController
     }
 
     @Override
-    public void insertSuccess() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Ajout de contact");
-        alertDialog.setMessage("Le contact a bien été ajouté");
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(AddContactActivity.this, DiscussionsActivity.class);
-                startActivity(intent);
-            }
-        });
-        alertDialog.show();
+    public void getConversation(String key) {
+
+        User.getUser().setContactSelectioned(User.getUser().getContacts().get(key.split("\n")[0]));
+
+        Intent listContactsAcvitity = new Intent(NewDiscussionActivity.this, DiscussionActivity.class);
+
+        startActivity(listContactsAcvitity);
     }
 
-    @Override
-    public void insertFailed() {
+    public void wrongRequest() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Ajout de contact");
-        alertDialog.setMessage("Le contact n'a pas été ajouté, l'adresse email est incorrect ou le contact est déjà existant");
+        alertDialog.setTitle("Requête incorrecte");
+        alertDialog.setMessage("Veuillez vérifier ales paramètres ou leurs valeurs");
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // here you can add functions
@@ -83,10 +95,11 @@ public class AddContactActivity extends Activity implements AddContactController
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_contact, menu);
+        getMenuInflater().inflate(R.menu.menu_new_discussion, menu);
         return true;
     }
 

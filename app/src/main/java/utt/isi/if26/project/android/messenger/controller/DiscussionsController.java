@@ -32,11 +32,11 @@ public class DiscussionsController implements OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        if (listener.isNetworkAvailable()) {
-            listener.getConversation(((TextView) arg1).getText().toString());
-        } else {
-            listener.networkIsUnavailable();
-        }
+            if (listener.isNetworkAvailable()) {
+                listener.getConversation(((TextView) arg1).getText().toString());
+            } else {
+                listener.networkIsUnavailable();
+            }
     }
 
     public void initContactsUserRequestOnWebServices() throws JSONException, InterruptedException, ExecutionException {

@@ -6,18 +6,13 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="utt.isi.if26.project.android.messenger.Activity.implementation.AddContactActivity">
+                tools:context="utt.isi.if26.project.android.messenger.Activity.implementation.NewDiscussionActivity">
 
-    <Button
+    <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ajouter"
-            android:id="@+id/add_contact_B"
-            android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
-    <EditText
-            android:ems="10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/contact_eT"
-            android:layout_marginTop="40dp" android:layout_centerHorizontal="true"/>
+            android:id="@+id/contacts_no_disccussion_lV"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false" android:layout_alignParentTop="true"
+            android:focusableInTouchMode="true"/>
 </RelativeLayout>
